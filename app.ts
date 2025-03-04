@@ -35,6 +35,8 @@ enum Status {
   console.log(Status.Success); // 200
   console.log(Status[404]);    // "NotFound"
 
+
+  //Union
 function logId(id: string | number | boolean) {
     console.log(id);
 }
@@ -69,4 +71,26 @@ function logObject(obj: {a : number} | {b : number}) {
     } else {
         console.log(obj.b)
     }
+}
+
+// Literal Types
+function fetchWithAuth(url: string, method: 'post' | 'get'){
+}
+fetchWithAuth('s', 'post');
+fetchWithAuth('p', 'get');
+fetchWithAuth('l', '1')
+
+let a: '123iii' = '123iii'
+a = '124'
+
+//Type Aliases
+type User = {
+    name: string,
+    age: number,
+    skills: string[]
+}
+let user2: User = {
+    name: 'asd',
+    age: 23,
+    skills: ['1', '2']
 }
