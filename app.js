@@ -85,3 +85,7 @@ let user3 = {
         return 'Hello';
     },
 };
+const user24 = {
+    name: 'as',
+    age: 33
+};
