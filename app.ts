@@ -94,3 +94,39 @@ let user2: User = {
     age: 23,
     skills: ['1', '2']
 }
+
+//интерфейсы
+interface User3 {
+    name: string,
+    age: number,
+    skills: string[]
+
+    log: (id: number) => string
+}
+
+interface Role {
+    roleId: number;
+}
+interface UserWithRole extends User3, Role {
+    createdAT: Date;
+}
+
+let user3: UserWithRole = {
+    name: 'asd',
+    age: 23,
+    skills: ['1', '2'],
+    roleId: 1,
+    createdAT: new Date(),
+
+    log(id) {
+        return 'Hello'
+    },
+}
+
+interface UserDic {
+    [index: number]: User
+}
+
+type UserDic2 = {
+    [index: number]: User
+}

@@ -75,3 +75,13 @@ let user2 = {
     age: 23,
     skills: ['1', '2']
 };
+let user3 = {
+    name: 'asd',
+    age: 23,
+    skills: ['1', '2'],
+    roleId: 1,
+    createdAT: new Date(),
+    log(id) {
+        return 'Hello';
+    },
+};
