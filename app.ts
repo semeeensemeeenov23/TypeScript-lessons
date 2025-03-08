@@ -147,3 +147,30 @@ type ID = string | number;
 interface IDI {
     ID: string | number
 }
+
+
+//Опциональность
+interface User25 {
+    login: string;
+    password?: string; //? опция не обязательно
+}
+const user25: User25 = {
+    login: "123156",
+    //password: "1231" 
+}
+
+interface UserPro {
+    login: string;
+    password?: {
+        type: 'primary' | 'secondary'
+    }
+}
+//одинаковые
+function testPass(user: UserPro) {
+    const t = user.password ? user.password.type : undefined
+    const p = user.password?.type
+}
+
+function test(param?: string) {
+    const t = param ?? console.log('anu')
+}

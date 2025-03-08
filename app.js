@@ -89,3 +89,16 @@ const user24 = {
     name: 'as',
     age: 33
 };
+const user25 = {
+    login: "123156",
+    //password: "1231" 
+};
+//одинаковые
+function testPass(user) {
+    var _a;
+    const t = user.password ? user.password.type : undefined;
+    const p = (_a = user.password) === null || _a === void 0 ? void 0 : _a.type;
+}
+function test(param) {
+    const t = param !== null && param !== void 0 ? param : console.log('anu');
+}
