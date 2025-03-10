@@ -78,10 +78,10 @@ function fetchWithAuth(url: string, method: 'post' | 'get'){
 }
 fetchWithAuth('s', 'post');
 fetchWithAuth('p', 'get');
-fetchWithAuth('l', '1')
+fetchWithAuth('l', 'post')
 
 let a: '123iii' = '123iii'
-a = '124'
+//a = '124' так нельзя
 
 //Type Aliases
 type User = {

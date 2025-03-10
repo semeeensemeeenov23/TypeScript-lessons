@@ -67,9 +67,8 @@ function fetchWithAuth(url, method) {
 }
 fetchWithAuth('s', 'post');
 fetchWithAuth('p', 'get');
-fetchWithAuth('l', '1');
+fetchWithAuth('l', 'post');
 let a = '123iii';
-a = '124';
 let user2 = {
     name: 'asd',
     age: 23,
