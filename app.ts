@@ -174,3 +174,203 @@ function testPass(user: UserPro) {
 function test(param?: string) {
     const t = param ?? console.log('anu')
 }
+
+//Void - функция ничего не возвращает
+// Функция, которая просто выводит сообщение в консоль
+function logMessage(message: string): void {
+    console.log("Сообщение:", message);
+}
+
+logMessage("Привет!"); // Выведет: Сообщение: Привет!
+
+//Unknown это специальный более строгий тип, чем any, который говорит:
+//"Я не знаю, какой здесь тип, но ты не можешь использовать это значение без явного приведения типа."
+//Пример проверки
+function processValue(value: unknown) {
+    if (typeof value === "string") {
+        console.log("Это строка:", value.toUpperCase()); // ✅ Преобразуем в верхний регистр
+    } else if (typeof value === "number") {
+        console.log("Это число:", value.toFixed(2)); // ✅ Округляем число до 2 знаков
+    } else {
+        console.log("Неизвестный тип данных");
+    }
+}
+
+processValue("hello"); // Выведет: Это строка: HELLO
+processValue(42.5678); // Выведет: Это число: 42.57
+processValue(true); // Выведет: Неизвестный тип данных
+
+// never
+type Status2 = "success" | "error";
+
+function processStatus(status: Status2) {
+    switch (status) {
+        case "success":
+            console.log("Успешно!");
+            break;
+        case "error":
+            console.log("Ошибка!");
+            break;
+        default:
+            const _exhaustiveCheck: never = status; // ❌ Ошибка, если появился новый статус!
+            throw new Error("Неизвестный статус!");
+    }
+}
+
+processStatus("success"); // ✅ Ок
+processStatus("error"); // ✅ Ок
+// processStatus("pending"); // ❌ Ошибка, потому что "pending" не входит в `Status`
+
+type NotAllowed = never; // Переменная с типом `never` не может существовать
+let something: NotAllowed; // ❌ Ошибка: Нельзя присвоить значение типу `never`
+
+function emergencyShutdown(reason: string): never {
+    throw new Error("АВАРИЙНАЯ ОСТАНОВКА! Причина: " + reason);
+}
+
+// 🔥 Если завод перегревается, система аварийно выключается
+emergencyShutdown("Перегрев оборудования!"); // ❌ Работа завода остановлена
+
+function callCenter(): never {
+    while (true) {
+        console.log("Оставайтесь на линии, ваш звонок очень важен для нас...");
+    }
+}
+
+// ☎️ Этот процесс никогда не завершится сам по себе
+callCenter();
+
+//Nul
+
+let aa: null = null;        // Явно указано, что здесь "ничего"
+let bb: undefined;          // Переменная создана, но ей не присвоили значение
+
+console.log(aa); // 👉 null
+console.log(bb); // 👉 undefined
+
+
+//Приведение типов
+let a31 = 5;
+let b31: string = a31.toString()
+
+let c31 = 'sdf';
+let d31: number = parseInt(c31) //+c31
+
+interface User31 {
+    name31: string;
+    email31: string;
+    login31: string;
+}
+
+const user31: User31 = {
+    name31: 'Вася',
+    email31: 'vasilii@ya.ru',
+    login31: 'vasi'
+}
+
+interface Admin {
+    name: string;
+    role: number;
+}
+
+// Type Guard
+function loogId(id: string | number) {
+    if (typeof id === 'string') {
+        console.log(id)
+    } else if (typeof id === 'number') {
+        console.log(id)
+    }
+    id
+}
+
+function loogId2(id: string | number) {
+    if (isString(id)) {
+        console.log(id)
+    } else if (typeof id === 'number') {
+        console.log(id)
+    }
+    id
+}
+function isString(x: string | number): x is string {
+    return typeof x === 'string';
+}
+
+function isAdmin(user: User | Admin): user is Admin {
+    return 'role' in user;
+}
+
+function isAdminAlternativ(user: User | Admin): user is Admin {
+    return (user as Admin).role !== undefined;
+}
+
+function serRoleZero(user: User | Admin) {
+    if (isAdmin(user)) {
+        user.role = 0;
+    } else {
+        throw new Error('Пользователь не админ');
+    }
+}
+
+//video_033 Упражнение typegard
+
+//интерфейс IPayment, который описывает структуру объекта платежа
+interface IPayment {
+    sum: number;
+    from: number;
+    to: number;
+}
+
+// Перечисление возможных статусов платежа
+enum PaymentStatus {
+    Success = 'success',
+    Failed = 'failed'
+}
+
+// Интерфейс запроса на платеж
+interface IPaymnetReqest extends IPayment {}
+
+// Интерфейс данных успешного ответа (содержит databaseId)
+interface IDataSuccess extends IPayment {
+    databaseId: number;
+}
+
+// Интерфейс данных неуспешного ответа (ошибка)
+interface IDataFailed {
+    errorMessage: string;
+    errorCode: number;
+}
+
+// Исправленный интерфейс успешного ответа
+interface IResponseSuccess {
+    status: PaymentStatus.Success;
+    data: IDataSuccess; // Теперь содержит правильные данные (IDataSuccess)
+}
+
+// Интерфейс неуспешного ответа
+interface IResponseFailed {
+    status: PaymentStatus.Failed;
+    data: IDataFailed; // Оставляем IDataFailed, потому что это ошибка
+}
+
+// Функция, которая принимает успешный или неуспешный ответ и возвращает число
+type f = (res: IResponseSuccess | IResponseFailed) => number;
+
+// Общий тип для ответов
+type Res = IResponseSuccess | IResponseFailed;
+
+// Функция Type Guard, которая проверяет, является ли ответ успешным
+function isSuccess(res: Res): res is IResponseSuccess {
+    if (res.status === PaymentStatus.Success) {
+        return true
+    };
+    return false
+}
+
+// Функция, которая получает ID из успешного ответа или выбрасывает ошибку
+function getIdFromData(res: Res): number {
+    if (isSuccess(res)) { // сокращение кода (res.status === PaymentStatus.Success)
+        return res.data.databaseId; // Теперь TypeScript не выдаст ошибку
+    } else {
+        throw new Error(res.data.errorMessage);
+    }
+}
