@@ -91,6 +91,24 @@ run('1')
 
 
 
+class Calculator {
+    // Перегрузка метода add
+    add(a: number, b: number): number;
+    add(a: string, b: string): string;
+    add(a: any, b: any): any {  // Реализация
+        if (typeof a === 'number' && typeof b === 'number') {
+            return a + b;  // если оба аргумента - числа, возвращаем их сумму
+        } else if (typeof a === 'string' && typeof b === 'string') {
+            return a + ' ' + b;  // если оба аргумента - строки, возвращаем их конкатенацию
+        }
+        throw new Error('Invalid types');  // если аргументы не соответствуют типам, выбрасываем ошибку
+    }
+}
+
+const calc = new Calculator();
+
+console.log(calc.add(10, 20));  // 30 (сложение чисел)
+console.log(calc.add('Hello', 'World'));  // Hello World (конкатенация строк)
 
 
 
